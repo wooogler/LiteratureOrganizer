@@ -89,7 +89,7 @@ JSON 문헌 정보:
             
             # 스트리밍 응답 생성
             for chunk in client.chat.completions.create(
-                model="chatgpt-4o-latest",
+                model="o1-preview",
                 messages=[
                     {"role": "system", "content": "당신은 문헌 리뷰를 정리하는 전문가입니다."},
                     {"role": "user", "content": prompt}
