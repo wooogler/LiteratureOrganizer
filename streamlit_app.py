@@ -21,15 +21,15 @@ with col2:
 # CSV 파일 업로드 기능
 uploaded_file = st.file_uploader("Zotero에서 내보낸 CSV 파일을 업로드하세요", type=["csv"])
 
-# 사용자의 논문 초록 입력란
-user_abstract = st.text_area("논문의 초록을 입력하세요:")
+# 사용자의 논문 아웃라인 입력란
+user_outline = st.text_area("논문의 아웃라인을 입력하세요:")
 
 # 제출 버튼
 if st.button("제출"):
     if uploaded_file is None:
         st.info("CSV 파일을 업로드하세요.")
-    elif not user_abstract:
-        st.info("논문의 초록을 입력하세요.")
+    elif not user_outline:
+        st.info("논문의 아웃라인을 입력하세요.")
     else:
         # CSV 파일 읽기
         df = pd.read_csv(uploaded_file)
@@ -55,20 +55,20 @@ if st.button("제출"):
         json_string = json.dumps(literature_review, ensure_ascii=False, indent=2)
 
         # OpenAI API를 사용하여 주제별로 논문 분류
-        prompt = f"""다음은 사용자의 논문 초록입니다:
+        prompt = f"""다음은 사용자의 논문 아웃라인입니다:
 
-{user_abstract}
+{user_outline}
 
-아래의 JSON 형식으로 정리된 문헌 정보를 분석하고, 사용자의 논문과의 연관성을 고려하여 주요 주제별로 논문을 정리하세요. 결과는 마크다운 형식으로 출력해주세요. 각 주제 아래에 관련된 논문을 다음 형식으로 나열하세요:
+아래의 JSON 형식으로 정리된 문헌 정보를 분석하고, 사용자의 논문 아웃라인과의 연관성을 고려하여 주요 주제별로 논문을 정리하세요. 결과는 마크다운 형식으로 출력해주세요. 각 주제 아래에 관련된 논문을 다음 형식으로 나열하세요:
 
 ## 주제
 #### {{논문 제목}}
 - 논문 요약: {{논문 요약}}
-- 관련성: {{사용자의 논문과의 관련성 설명}}
+- 관련성: {{사용자의 논문 아웃라인과의 관련성 설명}}
 
 #### {{논문 제목}}
 - 논문 요약: {{논문 요약}}
-- 관련성: {{사용자의 논문과의 관련성 설명}}
+- 관련성: {{사용자의 논문 아웃라인과의 관련성 설명}}
 
 ## 주제 2
 - ...
